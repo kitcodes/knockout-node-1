@@ -70,10 +70,7 @@
         var viewModel = {
             blogs: ko.observableArray(data),
             b_id: ko.observable(0),
-            viewPopupModel: function(){
-                var b_id = 10;
-                console.log(b_id);
-            }
+            
             
         };
         
@@ -89,7 +86,7 @@
                url: "http://localhost:5000/viewall",
                type: "GET"
                 }).then(function(data, err) {
-                    console.log(data);
+                   
                     viewModel.blogs(data);
             });
             
