@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <a href="#">
+                    <img src="img/logo-ux.png"/>
+                </a>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-12">
+                <div class="menu-main">
+                    <ul>
+                        <li><a href="">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>    
+<div class="container">
+    <div class="row">
+    <div class="col-lg-12">
+        <ul data-bind="template: { foreach: blogs }">
+            <li>
+                <div>
+                    <a data-toggle="modal" data-bind="click:viewPopupModel" data-target="#myModal">
+                        <span data-bind="text: b_title, value:b_id"></span>
+                    </a>
+                </div>
+            </li>
+        </ul>    
+    </div>
+    </div>
+</div>
+    
+    <!-----Model Popup----->
+    
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Modal Header</h4>
+          </div>
+          <div class="modal-body">
+            <h1></h1>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>   
+    
+    <!----End of Model Popup---->
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="js/knockout-3.4.0.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        var data = [];   
+        var viewModel = {
+            blogs: ko.observableArray(data),
+            b_id: ko.observable(0),
+            viewPopupModel: function(){
+                var b_id = 10;
+                console.log(b_id);
+            }
+            
+        };
+        
+        
+        ko.applyBindings(viewModel);
+        
+
+        
+        $(function(){
+            
+            
+            $.ajax({
+               url: "http://localhost:5000/viewall",
+               type: "GET"
+                }).then(function(data, err) {
+                    console.log(data);
+                    viewModel.blogs(data);
+            });
+            
+        })
+        
+        
+    </script>
+</body>
+</html>
